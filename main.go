@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/lloistborn/stockinvent/routes"
 )
 
 func main() {
@@ -14,12 +15,9 @@ func main() {
 func handleRequests() {
 	router := httprouter.New()
 
-	router.GET("/", index)
+	apiv1 := routes.Route()
+	apiv1.RegisterAPI(router)
 
 	log.Println("running on localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", router))
-}
-
-func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	w.Write([]byte("API working"))
 }
