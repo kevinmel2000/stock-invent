@@ -5,6 +5,7 @@ Simple REST API that demonstrate Simple Inventory Management (CRUD) using Go Pro
 1. `dep init` (first time only)
 2. Start the server `go run main.go`
 
-### How to Run in *NIX/Linux Environment
-
-### How to Run with Docker
+#### TODO
+- [ ] Use Client to access the API
+- [ ] Import data from CSV
+- [ ] Export data to CSV
