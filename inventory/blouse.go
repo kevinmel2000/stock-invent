@@ -3,6 +3,7 @@ package inventory
 import (
 	"context"
 	"net/http"
+	"strconv"
 
 	"github.com/asaskevich/govalidator"
 
@@ -70,6 +71,23 @@ func (inventoryModule *InventoryModule) GetBlouses(w http.ResponseWriter, r *htt
 	blouse, err := blouseDao.FindAll(ctx)
 	if err != nil {
 		util.RespondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	util.RespondWithJSON(w, http.StatusOK, blouse)
+}
+
+// GetBlouse return all array of blouse[] or status `internal server error`
+func (inventoryModule *InventoryModule) GetBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	ctx := context.Background()
+	blouseDao := dao.NewBlouseDao(ctx)
+	util := utils.NewUtilsModule(ctx)
+
+	id, _ := strconv.Atoi(p.ByName("id"))
+
+	blouse, err := blouseDao.FindOne(ctx, id)
+	if err != nil {
+		util.RespondWithError(w, http.StatusNotFound, err.Error())
 		return
 	}
 

@@ -19,7 +19,8 @@ func Route() *Routes {
 
 // RegisterAPI will register all available API Endpoint.
 func (routes *Routes) RegisterAPI(r *httprouter.Router) {
-	// Blouse crud endpoint.
+	// Blouse REST endpoint.
 	r.POST("/items/blouse", routes.Inventory.InsertBlouse)
 	r.GET("/items/blouse", routes.Inventory.GetBlouses)
+	r.GET("/items/blouse/:id", routes.Inventory.GetBlouse)
 }

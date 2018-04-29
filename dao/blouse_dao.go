@@ -23,6 +23,17 @@ func (blouseDao BlouseDao) FindAll(ctx context.Context) ([]Blouse, error) {
 	return blouse, err
 }
 
+// FindOne return one record of blouse by id
+func (blouseDao BlouseDao) FindOne(ctx context.Context, id int) (Blouse, error) {
+	db := InitDB()
+	defer db.Close()
+
+	var blouse Blouse
+	err := db.Find(&blouse, id).Error
+
+	return blouse, err
+}
+
 // Insert will create a record from Blouse object.
 func (blouseDao BlouseDao) Insert(ctx context.Context, blouse Blouse) error {
 	db := InitDB()
