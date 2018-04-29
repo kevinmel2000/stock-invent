@@ -12,12 +12,14 @@ import (
 	"github.com/mholt/binding"
 )
 
+// BlouseForm object.
 type BlouseForm struct {
 	SKU   string `valid:"required"`
 	Name  string `valid:"required"`
 	Stock int    `valid:"required"`
 }
 
+// FieldMap implemented for BlouseForm.
 func (bf *BlouseForm) FieldMap(r *http.Request) binding.FieldMap {
 	return binding.FieldMap{
 		&bf.Name:  "name",
@@ -26,7 +28,8 @@ func (bf *BlouseForm) FieldMap(r *http.Request) binding.FieldMap {
 	}
 }
 
-func (inventoryModule *InventoryModule) AddBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+// InsertBlouse used to insert one record to table.
+func (inventoryModule *InventoryModule) InsertBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	ctx := context.Background()
 
 	blouseform := new(BlouseForm)

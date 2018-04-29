@@ -1,18 +1,18 @@
 package dao
 
 import (
-	"database/sql"
-	"fmt"
+	"log"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3" // sqlite3 driver
 )
 
-func initDB() *gorm.DB {
-	db, err := gorm.Open("sqlite3", "./inventory.db")
+// InitDB used to create a db when one is not created.
+func InitDB() *gorm.DB {
+	db, err := gorm.Open("sqlite3", "./clothes_invent.db")
 	db.LogMode(true)
 	if err != nil {
-		fmt.Errorf("Could not open db: %v", err)
+		log.Fatal(err)
 	}
 
 	if !db.HasTable(&Blouse{}) {
@@ -20,10 +20,5 @@ func initDB() *gorm.DB {
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Blouse{})
 	}
 
-	return db
-}
-
-func initSQL() *sql.DB {
-	db, _ := sql.Open("sqlite3", "./inventory.db")
 	return db
 }

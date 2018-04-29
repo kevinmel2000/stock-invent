@@ -7,14 +7,14 @@ import (
 // BlouseDao object.
 type BlouseDao struct{}
 
-// NewBlouseDao used to access member of dao object.
+// NewBlouseDao used to access member of blouse_dao object.
 func NewBlouseDao(ctx context.Context) *BlouseDao {
 	return &BlouseDao{}
 }
 
 // FindAll return all array of blouse[].
 func (blouseDao BlouseDao) FindAll(ctx context.Context) ([]Blouse, error) {
-	db := initDB()
+	db := InitDB()
 	defer db.Close()
 
 	var blouse []Blouse
@@ -25,7 +25,7 @@ func (blouseDao BlouseDao) FindAll(ctx context.Context) ([]Blouse, error) {
 
 // Insert will create a record from Blouse object.
 func (blouseDao BlouseDao) Insert(ctx context.Context, blouse Blouse) error {
-	db := initDB()
+	db := InitDB()
 	defer db.Close()
 
 	err := db.Create(&blouse).Error
