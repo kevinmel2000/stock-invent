@@ -59,3 +59,19 @@ func (blouseDao BlouseDao) Update(ctx context.Context, id int, newblouse Blouse)
 
 	return err
 }
+
+// Delete will delete one record of blouse by id
+func (blouseDao BlouseDao) Delete(ctx context.Context, id int) error {
+	db := InitDB()
+	defer db.Close()
+
+	var blouse Blouse
+	err := db.First(&blouse, id).Error
+	if err != nil {
+		return err
+	}
+
+	err = db.Delete(blouse).Error
+
+	return err
+}

@@ -130,3 +130,20 @@ func (inventoryModule *InventoryModule) UpdateBlouse(w http.ResponseWriter, r *h
 
 	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
 }
+
+// DeleteBlouse will delete a single record based on id
+func (inventoryModule *InventoryModule) DeleteBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	ctx := context.Background()
+
+	util := utils.NewUtilsModule(ctx)
+	blouseDao := dao.NewBlouseDao(ctx)
+
+	id, _ := strconv.Atoi(p.ByName("id"))
+
+	if err := blouseDao.Delete(ctx, id); err != nil {
+		util.RespondWithError(w, http.StatusNotFound, err.Error())
+		return
+	}
+
+	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
+}
