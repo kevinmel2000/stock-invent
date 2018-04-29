@@ -9,3 +9,4 @@ Simple REST API that demonstrate Simple Inventory Management (CRUD) using Go Pro
 - [ ] Use Client to access the API
 - [ ] Import data from CSV
 - [ ] Export data to CSV
+- [ ] Example of API Call
