@@ -59,7 +59,7 @@ func (inventoryModule *InventoryModule) InsertBlouse(w http.ResponseWriter, r *h
 		return
 	}
 
-	util.RespondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
+	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
 }
 
 // GetBlouses return all array of blouse[] or status `internal server error`
@@ -68,16 +68,17 @@ func (inventoryModule *InventoryModule) GetBlouses(w http.ResponseWriter, r *htt
 	blouseDao := dao.NewBlouseDao(ctx)
 	util := utils.NewUtilsModule(ctx)
 
-	blouse, err := blouseDao.FindAll(ctx)
+	blouses, err := blouseDao.FindAll(ctx)
 	if err != nil {
 		util.RespondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	util.RespondWithJSON(w, http.StatusOK, blouse)
+	util.RespondWithJSON(w, http.StatusOK, map[string]interface{}{"status": "success", "result": blouses})
+
 }
 
-// GetBlouse return all array of blouse[] or status `internal server error`
+// GetBlouse return a single record based on id
 func (inventoryModule *InventoryModule) GetBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	ctx := context.Background()
 	blouseDao := dao.NewBlouseDao(ctx)
@@ -91,5 +92,41 @@ func (inventoryModule *InventoryModule) GetBlouse(w http.ResponseWriter, r *http
 		return
 	}
 
-	util.RespondWithJSON(w, http.StatusOK, blouse)
+	util.RespondWithJSON(w, http.StatusOK, map[string]interface{}{"status": "success", "result": blouse})
+}
+
+// UpdateBlouse will update a single record based on id
+func (inventoryModule *InventoryModule) UpdateBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	ctx := context.Background()
+
+	blouseform := new(BlouseForm)
+	util := utils.NewUtilsModule(ctx)
+
+	if err := binding.Bind(r, blouseform); err != nil {
+		util.RespondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	valid, err := govalidator.ValidateStruct(blouseform)
+	if !valid && err != nil {
+		util.RespondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	blouseDao := dao.NewBlouseDao(ctx)
+
+	id, _ := strconv.Atoi(p.ByName("id"))
+
+	blouse := dao.Blouse{
+		ID:    id,
+		Name:  blouseform.Name,
+		SKU:   blouseform.SKU,
+		Stock: blouseform.Stock,
+	}
+	if err := blouseDao.Update(ctx, id, blouse); err != nil {
+		util.RespondWithError(w, http.StatusNotFound, err.Error())
+		return
+	}
+
+	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
 }

@@ -7,7 +7,7 @@ import (
 
 // RespondWithError will return error response.
 func (utilsModule UtilsModule) RespondWithError(w http.ResponseWriter, code int, msg string) {
-	utilsModule.RespondWithJSON(w, code, map[string]string{"error": msg})
+	utilsModule.RespondWithJSON(w, code, map[string]string{"status": "error", "message": msg})
 }
 
 // RespondWithJSON will return success response.

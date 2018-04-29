@@ -23,4 +23,5 @@ func (routes *Routes) RegisterAPI(r *httprouter.Router) {
 	r.POST("/items/blouse", routes.Inventory.InsertBlouse)
 	r.GET("/items/blouse", routes.Inventory.GetBlouses)
 	r.GET("/items/blouse/:id", routes.Inventory.GetBlouse)
+	r.PUT("/items/blouse/:id", routes.Inventory.UpdateBlouse)
 }

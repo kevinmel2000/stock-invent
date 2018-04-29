@@ -43,3 +43,19 @@ func (blouseDao BlouseDao) Insert(ctx context.Context, blouse Blouse) error {
 
 	return err
 }
+
+// Update will edit one record of blouse by id
+func (blouseDao BlouseDao) Update(ctx context.Context, id int, newblouse Blouse) error {
+	db := InitDB()
+	defer db.Close()
+
+	var blouse Blouse
+	err := db.First(&blouse, id).Error
+	if err != nil {
+		return err
+	}
+
+	err = db.Save(newblouse).Error
+
+	return err
+}
