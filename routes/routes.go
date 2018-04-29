@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/julienschmidt/httprouter"
-	"github.com/lloistborn/stockinvent/controllers/inventory"
+	"github.com/lloistborn/stockinvent/inventory"
 )
 
 // Routes object.
@@ -19,5 +19,6 @@ func Route() *Routes {
 
 // RegisterAPI will register all available API Endpoint.
 func (routes *Routes) RegisterAPI(r *httprouter.Router) {
-	r.GET("/items", routes.Inventory.GetItems)
+	// blouse
+	r.GET("/items/blouse", routes.Inventory.GetBlouse)
 }

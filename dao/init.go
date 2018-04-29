@@ -1,4 +1,4 @@
-package model
+package dao
 
 import (
 	"database/sql"
@@ -8,8 +8,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type ModelModule struct{}
-
 func initDB() *gorm.DB {
 	db, err := gorm.Open("sqlite3", "./inventory.db")
 	db.LogMode(true)
@@ -17,9 +15,9 @@ func initDB() *gorm.DB {
 		fmt.Errorf("Could not open db: %v", err)
 	}
 
-	if !db.HasTable(&Item{}) {
-		db.CreateTable(&Item{})
-		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Item{})
+	if !db.HasTable(&Blouse{}) {
+		db.CreateTable(&Blouse{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Blouse{})
 	}
 
 	return db
