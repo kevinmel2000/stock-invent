@@ -20,5 +20,10 @@ func InitDB() *gorm.DB {
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Blouse{})
 	}
 
+	if !db.HasTable(&InboundBlouse{}) {
+		db.CreateTable(&InboundBlouse{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&InboundBlouse{})
+	}
+
 	return db
 }
