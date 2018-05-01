@@ -1,5 +1,5 @@
 # STOCKINVENT
-Simple REST API that demonstrate Simple Inventory Management (CRUD) using Go Programming Language and SQLite3
+Simple REST API that demonstrate Simple Inventory Management (CRUD) using Go, GORM and SQLite3
 
 ### Running in development
 1. `dep init` (first time only)
