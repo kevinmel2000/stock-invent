@@ -15,11 +15,11 @@ Simple REST API that demonstrate Simple Inventory Management (CRUD) using Go Pro
 - [ ] Example of API Call
 
 #### API Endpoint
-- `POST` `/items/blouse` to insert single blouse
-- `GET` `/items/blouse` to get all blouses
-- `GET` `/items/blouse:id` to get single blouse
-- `PUT` `/items/blouse:id` to update single blouse
-- `DELETE` `/items/blouse:id` to remove single blouse
+- `POST` `/items/blouses` to insert single blouse
+- `GET` `/items/blouses` to get all blouses
+- `GET` `/items/blouses:id` to get single blouse
+- `PUT` `/items/blouses:id` to update single blouse
+- `DELETE` `/items/blouses:id` to remove single blouse
 
 
 
