@@ -26,5 +26,7 @@ func (routes *Routes) RegisterAPI(r *httprouter.Router) {
 	r.PUT("/items/blouses/:id", routes.Inventory.UpdateBlouse)
 	r.DELETE("/items/blouses/:id", routes.Inventory.DeleteBlouse)
 
+	// Inbound Blouse Rest endpoint.
 	r.POST("/items/blouses/inbound", routes.Inventory.InsertInboundBlouse)
+	r.GET("/items/blouses/inbound/:id", routes.Inventory.GetInboundBlouse)
 }

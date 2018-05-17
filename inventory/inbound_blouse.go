@@ -10,6 +10,7 @@ import (
 	"github.com/mholt/binding"
 
 	"github.com/julienschmidt/httprouter"
+	"strconv"
 )
 
 // InboundBlouseForm object.
@@ -87,4 +88,20 @@ func (inventoryModule *InventoryModule) InsertInboundBlouse(w http.ResponseWrite
 	}
 
 	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
+}
+
+func (inventoryModule *InventoryModule) GetInboundBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	ctx := context.Background()
+	dao := dao.NewInboundBlouseDao(ctx)
+	util := utils.NewUtilsModule(ctx)
+
+	id, _ := strconv.Atoi(p.ByName("id"))
+
+	inboundBlouse, err := dao.FindOne(ctx, id)
+	if err != nil {
+		util.RespondWithError(w, http.StatusNotFound, err.Error())
+		return
+	}
+
+	util.RespondWithJSON(w, http.StatusOK, map[string]interface{}{"status": "success", "result": inboundBlouse})
 }
