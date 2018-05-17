@@ -29,4 +29,5 @@ func (routes *Routes) RegisterAPI(r *httprouter.Router) {
 	// Inbound Blouse Rest endpoint.
 	r.POST("/items/inbound", routes.Inventory.InsertInboundBlouse)
 	r.GET("/items/inbound/:id", routes.Inventory.GetInboundBlouse)
+	r.GET("/items/inbound", routes.Inventory.GetInboundBlouses)
 }

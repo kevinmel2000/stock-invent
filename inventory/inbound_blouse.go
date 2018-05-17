@@ -9,8 +9,9 @@ import (
 	"github.com/lloistborn/stockinvent/utils"
 	"github.com/mholt/binding"
 
-	"github.com/julienschmidt/httprouter"
 	"strconv"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 // InboundBlouseForm object.
@@ -90,6 +91,7 @@ func (inventoryModule *InventoryModule) InsertInboundBlouse(w http.ResponseWrite
 	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
 }
 
+// GetInboundBlouse return single record.
 func (inventoryModule *InventoryModule) GetInboundBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	ctx := context.Background()
 	dao := dao.NewInboundBlouseDao(ctx)
@@ -104,4 +106,19 @@ func (inventoryModule *InventoryModule) GetInboundBlouse(w http.ResponseWriter, 
 	}
 
 	util.RespondWithJSON(w, http.StatusOK, map[string]interface{}{"status": "success", "result": inboundBlouse})
+}
+
+// GetInboundBlouses return all record.
+func (inventoryModule *InventoryModule) GetInboundBlouses(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	ctx := context.Background()
+	dao := dao.NewInboundBlouseDao(ctx)
+	util := utils.NewUtilsModule(ctx)
+
+	inboundBlouses, err := dao.FindAll(ctx)
+	if err != nil {
+		util.RespondWithError(w, http.StatusNotFound, err.Error())
+		return
+	}
+
+	util.RespondWithJSON(w, http.StatusOK, map[string]interface{}{"status": "success", "result": inboundBlouses})
 }
