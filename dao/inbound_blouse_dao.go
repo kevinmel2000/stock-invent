@@ -41,3 +41,19 @@ func (inboundBlouseDao InboundBlouseDao) FindAll(ctx context.Context) ([]Inbound
 
 	return inboundBlouse, err
 }
+
+// Update update single record by id.
+func (inboundBlouseDao InboundBlouseDao) Update(ctx context.Context, id int, NewInboundBlouse InboundBlouse) error {
+	db := InitDB()
+	defer db.Close()
+
+	var inboundBlouse InboundBlouse
+	err := db.First(&inboundBlouse, id).Error
+	if err != nil {
+		return err
+	}
+
+	err = db.Save(NewInboundBlouse).Error
+
+	return err
+}

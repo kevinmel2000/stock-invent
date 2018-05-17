@@ -122,3 +122,46 @@ func (inventoryModule *InventoryModule) GetInboundBlouses(w http.ResponseWriter,
 
 	util.RespondWithJSON(w, http.StatusOK, map[string]interface{}{"status": "success", "result": inboundBlouses})
 }
+
+// UpdateInboundBlouse update record by id.
+func (inventoryModule *InventoryModule) UpdateInboundBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	ctx := context.Background()
+
+	inboundBlouseForm := new(InboundBlouseForm)
+	util := utils.NewUtilsModule(ctx)
+
+	if err := binding.Bind(r, inboundBlouseForm); err != nil {
+		util.RespondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	valid, err := govalidator.ValidateStruct(inboundBlouseForm)
+	if !valid && err != nil {
+		util.RespondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	inboundBlouseDao := dao.NewInboundBlouseDao(ctx)
+
+	id, _ := strconv.Atoi(p.ByName("id"))
+
+	inboundBlouse := dao.InboundBlouse{
+		ID:             id,
+		BlouseID:       inboundBlouseForm.BlouseID,
+		SKU:            inboundBlouseForm.SKU,
+		Name:           inboundBlouseForm.Name,
+		OrderAmount:    inboundBlouseForm.OrderAmount,
+		ReceivedAmount: inboundBlouseForm.ReceivedAmount,
+		PurchasePrice:  inboundBlouseForm.PurchasePrice,
+		TotalPrice:     inboundBlouseForm.TotalPrice,
+		ReceiptNumber:  inboundBlouseForm.ReceiptNumber,
+		Notes:          inboundBlouseForm.Notes,
+	}
+
+	if err := inboundBlouseDao.Update(ctx, id, inboundBlouse); err != nil {
+		util.RespondWithError(w, http.StatusNotFound, err.Error())
+		return
+	}
+
+	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
+}

@@ -1,6 +1,6 @@
 package dao
 
-// InboundBlouse object.
+// InboundBlouse model.
 type InboundBlouse struct {
 	ID             int    `json:"id"`
 	BlouseID       int    `json:"blouse_id"`
