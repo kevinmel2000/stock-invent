@@ -31,4 +31,11 @@ func (routes *Routes) RegisterAPI(r *httprouter.Router) {
 	r.GET("/items/inbound/:id", routes.Inventory.GetInboundBlouse)
 	r.GET("/items/inbound", routes.Inventory.GetInboundBlouses)
 	r.PUT("/items/inbound/:id", routes.Inventory.UpdateInboundBlouse)
+	r.DELETE("/items/inbound/:id", routes.Inventory.DeleteInboundBlouse)
+
+	// TODO: implement Outbound Blouse Rest endpoint.
+
+	// TODO: implement Value of Goods Rest endpoint.
+
+	// TODO: implement Selling Report Rest endpoint.
 }

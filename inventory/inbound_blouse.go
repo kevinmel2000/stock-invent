@@ -165,3 +165,20 @@ func (inventoryModule *InventoryModule) UpdateInboundBlouse(w http.ResponseWrite
 
 	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
 }
+
+// DeleteInboundBlouse delete single record by id.
+func (inventoryModule *InventoryModule) DeleteInboundBlouse(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	ctx := context.Background()
+
+	util := utils.NewUtilsModule(ctx)
+	inboundBlouseDao := dao.NewInboundBlouseDao(ctx)
+
+	id, _ := strconv.Atoi(p.ByName("id"))
+
+	if err := inboundBlouseDao.Delete(ctx, id); err != nil {
+		util.RespondWithError(w, http.StatusNotFound, err.Error())
+		return
+	}
+
+	util.RespondWithJSON(w, http.StatusOK, map[string]string{"status": "success"})
+}
